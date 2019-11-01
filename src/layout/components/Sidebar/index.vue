@@ -1,18 +1,23 @@
 <template>
-  <div :class="{'has-logo':showLogo}">
+  <div :class="{'has-logo': showLogo}">
     <logo v-if="showLogo" :collapse="isCollapse" />
-    <el-scrollbar wrap-class="scrollbar-wrapper">
+    <el-scrollbar wrap="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
         :background-color="variables.menuBg"
         :text-color="variables.menuText"
-        :unique-opened="false"
+        :uique-opened="false"
         :active-text-color="variables.menuActiveText"
         :collapse-transition="false"
         mode="vertical"
       >
-        <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
+        <sidebar-item
+          v-for="route in permission_routes"
+          :key="route.path"
+          :item="route"
+          :base-path="route.path"
+        />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -25,28 +30,29 @@ import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
 
 export default {
-  components: { SidebarItem, Logo },
+  name: 'Slidebar',
+  components: {
+    Logo,
+    SidebarItem
+  },
   computed: {
     ...mapGetters([
-      'sidebar'
+      'sidebar',
+      'permission_routes'
     ]),
-    routes() {
-      return this.$router.options.routes
-    },
-    activeMenu() {
-      const route = this.$route
-      const { meta, path } = route
-      // if set path, the sidebar will highlight the path you set
-      if (meta.activeMenu) {
-        return meta.activeMenu
-      }
-      return path
+    variables() {
+      return variables
     },
     showLogo() {
       return this.$store.state.settings.sidebarLogo
     },
-    variables() {
-      return variables
+    activeMenu() {
+      const route = this.$route
+      const { meta, path } = route
+      if (meta.activeMenu) {
+        return meta.activeMenu
+      }
+      else return path
     },
     isCollapse() {
       return !this.sidebar.opened

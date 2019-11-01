@@ -21,6 +21,8 @@ module.exports = {
         "allowFirstLine": false
       }
     }],
+    "vue/html-self-closing": 0,
+    "eslint-disable-next-line": true,
     "vue/singleline-html-element-content-newline": "off",
     "vue/multiline-html-element-content-newline":"off",
     "vue/name-property-casing": ["error", "PascalCase"],
@@ -31,9 +33,9 @@ module.exports = {
       'after': true
     }],
     'block-spacing': [2, 'always'],
-    'brace-style': [2, '1tbs', {
-      'allowSingleLine': true
-    }],
+    // 'brace-style': [2, '1tbs', {
+    //   'allowSingleLine': true
+    // }],
     'camelcase': [0, {
       'properties': 'always'
     }],
@@ -72,7 +74,7 @@ module.exports = {
     'new-parens': 2,
     'no-array-constructor': 2,
     'no-caller': 2,
-    'no-console': 'off',
+    'no-console': 0,
     'no-class-assign': 2,
     'no-cond-assign': 2,
     'no-const-assign': 2,
@@ -189,7 +191,7 @@ module.exports = {
     'yield-star-spacing': [2, 'both'],
     'yoda': [2, 'never'],
     'prefer-const': 2,
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    'no-debugger': 1,
     'object-curly-spacing': [2, 'always', {
       objectsInObjects: false
     }],
