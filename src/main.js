@@ -13,6 +13,7 @@ import store from './store'
 import router from './router'
 import './icons'
 import './permission'
+import * as filters from './filters'
 
 /**
  * If you don't want to use mock-server
@@ -29,6 +30,10 @@ if (process.env.NODE_ENV === 'production') {
 
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size
+})
+
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
 })
 
 Vue.config.productionTip = false

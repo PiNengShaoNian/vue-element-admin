@@ -1,15 +1,12 @@
 <template>
   <div class="navbar">
-    <hamburger
-      id="hamburger-container"
-      :is-active="sidebar.opened"
-      class="hamburger-container"
-      @toggleClick="toggleSideBar"
-    />
+    <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
+
     <div class="right-menu">
-      <template v-if="device !== 'mobile'">
-        <search id="hearder-search" class="right-menu-item" />
+      <template v-if="device!=='mobile'">
+        <search id="header-search" class="right-menu-item" />
 
         <error-log class="errLog-container right-menu-item hover-effect" />
 
@@ -18,11 +15,12 @@
         <el-tooltip content="Global Size" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>
+
       </template>
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" />
+          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -32,8 +30,14 @@
           <router-link to="/">
             <el-dropdown-item>Dashboard</el-dropdown-item>
           </router-link>
-          <el-dropdown-item>
-            <span style="display: block;" @click="logout">Log Out</span>
+          <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
+            <el-dropdown-item>Github</el-dropdown-item>
+          </a>
+          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
+            <el-dropdown-item>Docs</el-dropdown-item>
+          </a>
+          <el-dropdown-item divided>
+            <span style="display:block;" @click="logout">Log Out</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -45,26 +49,25 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-import Search from '@/components/HeaderSearch'
 import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
+import Search from '@/components/HeaderSearch'
 
 export default {
-  name: 'Navbar',
   components: {
     Breadcrumb,
     Hamburger,
-    Search,
     ErrorLog,
     Screenfull,
-    SizeSelect
+    SizeSelect,
+    Search
   },
   computed: {
     ...mapGetters([
       'sidebar',
-      'device',
-      'avatar'
+      'avatar',
+      'device'
     ])
   },
   methods: {
@@ -85,18 +88,18 @@ export default {
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
   .hamburger-container {
     line-height: 46px;
     height: 100%;
     float: left;
     cursor: pointer;
-    transition: background 0.3s;
-    -webkit-tap-highlight-color: transparent;
+    transition: background .3s;
+    -webkit-tap-highlight-color:transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.025);
+      background: rgba(0, 0, 0, .025)
     }
   }
 
@@ -128,10 +131,10 @@ export default {
 
       &.hover-effect {
         cursor: pointer;
-        transition: background 0.3s;
+        transition: background .3s;
 
         &:hover {
-          background: rgba(0, 0, 0, 0.025);
+          background: rgba(0, 0, 0, .025)
         }
       }
     }

@@ -2,8 +2,11 @@ import { Message } from 'element-ui'
 import router from './router'
 import store from './store'
 import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 import { getToken } from '@/utils/auth'
 import getPageTitle from '@/utils/get-page-title'
+
+NProgress.configure({ showSpinner: false })
 
 const whiteList = ['/login', '/auth-redirect']
 
@@ -24,27 +27,12 @@ router.beforeEach(async(to, from, next) => {
         next()
       } else {
         try {
-          console.log('a')
           const { roles } = await store.dispatch('user/getInfo')
-
-          console.log({
-            to,
-            hasToken,
-            hasRoles,
-            accessRoutes
-          })
 
           const accessRoutes = await store.dispatch(
             'permission/generateRoutes',
             roles
           )
-
-          console.log({
-            to,
-            hasToken,
-            hasRoles,
-            accessRoutes
-          })
 
           router.addRoutes(accessRoutes)
           next({ ...to, replace: true })
@@ -53,6 +41,7 @@ router.beforeEach(async(to, from, next) => {
           await store.dispatch('user/resetToken')
           Message.error(error || 'Has Error')
           next(`/login?redirect=${to.path}`)
+          NProgress.done()
         }
       }
     }

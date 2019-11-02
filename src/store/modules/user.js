@@ -1,11 +1,12 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { login, getInfo, logout } from '@/api/user'
-import { resetRouter } from '@/router'
+import router, { resetRouter } from '@/router'
 
 const state = {
   token: getToken(),
   roles: [],
-  avatar: ''
+  avatar: '',
+  name: ''
 }
 
 const mutations = {
@@ -94,6 +95,26 @@ const actions = {
         .catch(error => {
           reject(error)
         })
+    })
+  },
+  changeRoles({ commit, dispatch }, role) {
+    return new Promise(async resolve => {
+      const token = role + '-token'
+      commit('SET_TOKEN', token)
+      setToken(token)
+
+      const { roles } = await dispatch('getInfo')
+
+      resetRouter()
+
+      const accessRoutes = await dispatch('permission/generateRoutes', roles, {
+        root: true
+      })
+      router.addRoutes(accessRoutes)
+
+      dispatch('tagsView/delAllViews', null, { root: true })
+
+      resolve()
     })
   }
 }

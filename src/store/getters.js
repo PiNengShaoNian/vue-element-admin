@@ -6,7 +6,8 @@ const getters = {
   device: state => state.app.device,
   errorLogs: state => state.errorLog.logs,
   size: state => state.app.size,
-  avatar: state => state.user.avatar
+  avatar: state => state.user.avatar,
+  name: state => state.user.name
 }
 
 export default getters
